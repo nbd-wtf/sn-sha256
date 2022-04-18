@@ -1,6 +1,6 @@
 import scala.scalanative.unsigned._
 import utest._
-import Sha256.sha256
+import sha256.Sha256.sha256
 
 object Sha256Test extends TestSuite {
   def bytearrayToHex(ba: Array[UByte]): String =

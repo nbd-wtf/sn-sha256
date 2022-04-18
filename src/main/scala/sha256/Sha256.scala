@@ -1,3 +1,5 @@
+package sha256
+
 import scala.scalanative.libc.stdlib
 import scala.scalanative.libc.string
 import scala.scalanative.unsafe._
