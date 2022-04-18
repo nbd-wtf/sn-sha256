@@ -13,16 +13,16 @@ object Sha256 {
         val size: CSize = string.strlen(str)
         val data = alloc[Byte](size).asInstanceOf[Ptr[Byte]]
         string.strncpy(data, str, size)
-        sha256(data, size)
+        sha256(data.asInstanceOf[Ptr[UByte]], size)
       }
     }
   }
 
-  def sha256(bytearray: Array[Byte]): Array[UByte] = {
+  def sha256(bytearray: Array[UByte]): Array[UByte] = {
     Zone { implicit z =>
       {
         val size = bytearray.size.toLong.toULong
-        val data = alloc[Byte](size).asInstanceOf[Ptr[Byte]]
+        val data = alloc[UByte](size).asInstanceOf[Ptr[UByte]]
         for (i <- 0 until bytearray.size) {
           !(data + i) = bytearray(i)
         }
@@ -31,12 +31,12 @@ object Sha256 {
     }
   }
 
-  def sha256(data: Ptr[Byte], size: CSize): Array[UByte] = {
+  def sha256(data: Ptr[UByte], size: CSize): Array[UByte] = {
     val hash = stdlib.malloc(32L.toULong).asInstanceOf[Ptr[UByte]]
     Sha256Extern.sha256(data, size, hash);
     val res = Array.ofDim[UByte](32)
     for (i <- 0 until 32) {
-      res(i) = !(hash + i)
+      res(i) = (!(hash + i)).toUByte
     }
     stdlib.free(hash.asInstanceOf[Ptr[Byte]])
     res
@@ -45,5 +45,5 @@ object Sha256 {
 
 @extern
 object Sha256Extern {
-  def sha256(data: Ptr[Byte], len: CSize, hash: Ptr[UByte]): Unit = extern
+  def sha256(data: Ptr[UByte], len: CSize, hash: Ptr[UByte]): Unit = extern
 }

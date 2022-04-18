@@ -24,30 +24,30 @@ object Sha256Test extends TestSuite {
 
     test("big string hashing") {
       val r = sha256(
-        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        "A linha não respondia; ia andando. Buraco aberto pela agulha era logo enchido por ela, silenciosa e ativa, como quem sabe o que faz, e não está para ouvir palavras loucas. A agulha, vendo que ela não lhe dava resposta, calou-se também, e foi andando. E era tudo silêncio na saleta de costura; não se ouvia mais que o plic-plic-plic-plic da agulha no pano. Caindo o sol, a costureira dobrou a costura, para o dia seguinte. Continuou ainda nessa e no outro, até que no quarto acabou a obra, e ficou esperando o baile."
       )
 
       r.size ==> 32
       bytearrayToHex(r) ==>
-        "f54353008a2553262ecdc4a34749563ba0950e8b0fc8652780b0a614b99683c1"
+        "1f63ba66aeb77982ce4e730c1849cc49593ee366bf0145167ecb2390be593b20"
     }
 
     test("bytearray hashing") {
       val r = sha256(
-        Array[Byte](1, 2, 3, 4)
+        Array[UByte](2.toUByte, 4.toUByte, 201.toUByte, 203.toUByte)
       )
 
       r.size ==> 32
       bytearrayToHex(r) ==>
-        "9f64a747e1b97f131fabb6b447296c9b6f0201e79fb3c5356e6c77e89b6a806a"
+        "f67fcc16df631caade8ced02f61349cdca9e1456eb6e4033f6001520862edc4e"
     }
 
     test("big bytearray hashing") {
-      val r = sha256(Array.tabulate[Byte](127)(i => i.toByte))
+      val r = sha256(Array.tabulate[UByte](256)(i => i.toUByte))
 
       r.size ==> 32
       bytearrayToHex(r) ==>
-        "92ca0fa6651ee2f97b884b7246a562fa71250fedefe5ebf270d31c546bfea976"
+        "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880"
     }
   }
 }
