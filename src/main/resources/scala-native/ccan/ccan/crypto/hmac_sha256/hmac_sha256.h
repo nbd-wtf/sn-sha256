@@ -1,10 +1,10 @@
 #ifndef CCAN_CRYPTO_HMAC_SHA256_H
 #define CCAN_CRYPTO_HMAC_SHA256_H
 /* BSD-MIT - see LICENSE file for details */
-#include "config.h"
+#include "../../../config.h"
 #include <stdint.h>
 #include <stdlib.h>
-#include <ccan/crypto/sha256/sha256.h>
+#include "../sha256/sha256.h"
 
 /* Number of bytes per block. */
 #define HMAC_SHA256_BLOCKSIZE 64

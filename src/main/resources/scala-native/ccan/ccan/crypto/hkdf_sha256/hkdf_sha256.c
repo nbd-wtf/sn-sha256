@@ -1,6 +1,6 @@
 /* MIT (BSD) license - see LICENSE file for details */
-#include <ccan/crypto/hkdf_sha256/hkdf_sha256.h>
-#include <ccan/crypto/hmac_sha256/hmac_sha256.h>
+#include "../hkdf_sha256/hkdf_sha256.h"
+#include "../hmac_sha256/hmac_sha256.h"
 #include <assert.h>
 #include <string.h>
 

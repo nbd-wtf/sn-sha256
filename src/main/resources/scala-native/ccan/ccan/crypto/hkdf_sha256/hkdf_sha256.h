@@ -1,7 +1,7 @@
 #ifndef CCAN_CRYPTO_HKDF_SHA256_H
 #define CCAN_CRYPTO_HKDF_SHA256_H
 /* BSD-MIT - see LICENSE file for details */
-#include "config.h"
+#include "../../../config.h"
 #include <stdlib.h>
 
 /**

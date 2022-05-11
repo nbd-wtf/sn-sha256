@@ -12,10 +12,6 @@ developers          := List(
   Developer(id="fiatjaf", name="fiatjaf", email="fiatjaf@gmail.com", url=url("https://fiatjaf.com/"))
 )
 
-nativeCompileOptions   := Seq(
-  "-I",
-  ((ThisBuild / baseDirectory).value / "src" / "main" / "resources" / "scala-native" / "ccan").toString
-)
 publishMavenStyle      := true
 publishTo := sonatypePublishToBundle.value
 sonatypeCredentialHost := "s01.oss.sonatype.org"

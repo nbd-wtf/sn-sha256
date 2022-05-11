@@ -2,7 +2,7 @@
 #ifndef CCAN_ENDIAN_H
 #define CCAN_ENDIAN_H
 #include <stdint.h>
-#include "config.h"
+#include "../../config.h"
 
 /**
  * BSWAP_16 - reverse bytes in a constant uint16_t value.

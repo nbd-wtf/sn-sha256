@@ -1,5 +1,5 @@
 /* MIT (BSD) license - see LICENSE file for details */
-#include <ccan/crypto/hmac_sha256/hmac_sha256.h>
+#include "../hmac_sha256/hmac_sha256.h"
 #include <string.h>
 
 #define IPAD 0x3636363636363636ULL
