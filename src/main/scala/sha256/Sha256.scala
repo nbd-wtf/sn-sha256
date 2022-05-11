@@ -31,9 +31,9 @@ object Sha256 {
     }
   }
 
-  def sha256(data: Ptr[UByte], size: CSize): Array[UByte] = {
+  def sha256(payload: Ptr[UByte], size: CSize): Array[UByte] = {
     val hash = stdlib.malloc(32L.toULong).asInstanceOf[Ptr[UByte]]
-    Sha256Extern.sha256(data, size, hash);
+    Sha256Extern.sha256(hash, payload, size);
     val res = Array.ofDim[UByte](32)
     for (i <- 0 until 32) {
       res(i) = (!(hash + i)).toUByte
@@ -45,5 +45,5 @@ object Sha256 {
 
 @extern
 object Sha256Extern {
-  def sha256(data: Ptr[UByte], len: CSize, hash: Ptr[UByte]): Unit = extern
+  def sha256(hash: Ptr[UByte], payload: Ptr[UByte], len: CSize): Unit = extern
 }
