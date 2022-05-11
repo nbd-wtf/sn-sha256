@@ -1,6 +1,6 @@
 import scala.scalanative.unsigned._
 import utest._
-import sha256.{Sha256, Hkdf}
+import sha256.{Sha256, Hkdf, Hmac}
 
 object Sha256EtcTests extends TestSuite {
   def bytes2hex(ba: Array[UByte]): String =
@@ -68,6 +68,17 @@ object Sha256EtcTests extends TestSuite {
       bytes2hex(
         r
       ) ==> "a754786431d51674edc4f04a568a55f37b996db70fa2a795b15e2ea57cfed8be"
+    }
+
+    test("hmac") {
+      val key = "abcdef".getBytes.map(_.toUByte)
+      val msg = "123456".getBytes.map(_.toUByte)
+
+      val r = Hmac.hmac(key, msg)
+      r.size ==> 32
+      bytes2hex(
+        r
+      ) ==> "ec4a11a5568e5cfdb5fbfe7152e8920d7bad864a0645c57fe49046a3e81ec91d"
     }
   }
 }
