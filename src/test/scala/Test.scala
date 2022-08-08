@@ -1,6 +1,6 @@
 import scala.scalanative.unsigned._
 import utest._
-import sha256.{Sha256, Hkdf, Hmac}
+import sha256.{Sha256, Hkdf, Hmac, Sha512, Hmac512, RipeMd160}
 
 object Sha256EtcTests extends TestSuite {
   def bytes2hex(ba: Array[UByte]): String =
@@ -79,6 +79,29 @@ object Sha256EtcTests extends TestSuite {
       bytes2hex(
         r
       ) ==> "ec4a11a5568e5cfdb5fbfe7152e8920d7bad864a0645c57fe49046a3e81ec91d"
+    }
+
+    test("sha512") {
+      bytes2hex(
+        Sha512.sha512("banana")
+      ) ==> "f8e3183d38e6c51889582cb260ab825252f395b4ac8fb0e6b13e9a71f7c10a80d5301e4a949f2783cb0c20205f1d850f87045f4420ad2271c8fd5f0cd8944be3"
+    }
+
+    test("ripemd160") {
+      bytes2hex(
+        RipeMd160.ripemd160("banana")
+      ) ==> "e8f92e55b15aec83f458cfee39dd4ffeb7f4b8ed"
+    }
+
+    test("hmac512") {
+      val key = "abcdef".getBytes.map(_.toUByte)
+      val msg = "123456".getBytes.map(_.toUByte)
+
+      val r = Hmac512.hmac(key, msg)
+      r.size ==> 64
+      bytes2hex(
+        r
+      ) ==> "130a4caafb11b798dd7528628d21f742feaad266e66141cc2ac003f0e6437cb5749245af8a3018d354e4b55e14703a5966808438afe4aae516d2824b014b5902"
     }
   }
 }

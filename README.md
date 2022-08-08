@@ -14,7 +14,7 @@ libraryDependencies += "com.fiatjaf" %%% "sn-sha256" % "0.3.0"
 Usage
 -----
 
-This library provides 3 functions: `Sha256.sha256()`, `Hmac.hmac()` and `Hkdf.hkdf()`. Use it as follows:
+This library provides: `Sha256.sha256()`, `Hmac.hmac()` and `Hkdf.hkdf()`. Use it as follows:
 
 ```scala
 import scala.scalanative.unsigned._
