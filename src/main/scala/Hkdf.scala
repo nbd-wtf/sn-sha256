@@ -1,11 +1,9 @@
-package sha256
-
 import scala.scalanative.libc.stdlib
 import scala.scalanative.libc.string
 import scala.scalanative.unsafe._
 import scala.scalanative.unsigned._
 
-object Hkdf {
+package object hkdf256 {
   def hkdf(
       salt: Array[UByte],
       secret: Array[UByte],
@@ -52,18 +50,18 @@ object Hkdf {
       }
     }
   }
-}
 
-@extern
-object HkdfExtern {
-  def hkdf_sha256(
-      okm: Ptr[UByte],
-      okm_size: CSize,
-      s: Ptr[UByte],
-      ssize: CSize,
-      k: Ptr[UByte],
-      ksize: CSize,
-      info: Ptr[UByte],
-      isize: CSize
-  ): Unit = extern
+  @extern
+  object HkdfExtern {
+    def hkdf_sha256(
+        okm: Ptr[UByte],
+        okm_size: CSize,
+        s: Ptr[UByte],
+        ssize: CSize,
+        k: Ptr[UByte],
+        ksize: CSize,
+        info: Ptr[UByte],
+        isize: CSize
+    ): Unit = extern
+  }
 }

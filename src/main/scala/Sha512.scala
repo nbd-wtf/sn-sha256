@@ -1,11 +1,9 @@
-package sha256
-
 import scala.scalanative.libc.stdlib
 import scala.scalanative.libc.string
 import scala.scalanative.unsafe._
 import scala.scalanative.unsigned._
 
-object Sha512 {
+package object sha512 {
   def sha512(input: String): Array[UByte] = {
     Zone { implicit z =>
       {
@@ -41,9 +39,9 @@ object Sha512 {
     stdlib.free(hash.asInstanceOf[Ptr[Byte]])
     res
   }
-}
 
-@extern
-object Sha512Extern {
-  def sha512(hash: Ptr[UByte], payload: Ptr[UByte], len: CSize): Unit = extern
+  @extern
+  object Sha512Extern {
+    def sha512(hash: Ptr[UByte], payload: Ptr[UByte], len: CSize): Unit = extern
+  }
 }

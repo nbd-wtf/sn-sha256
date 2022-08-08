@@ -1,6 +1,5 @@
 import scala.scalanative.unsigned._
 import utest._
-import sha256.{Sha256, Hkdf, Hmac, Sha512, Hmac512, RipeMd160}
 
 object Sha256EtcTests extends TestSuite {
   def bytes2hex(ba: Array[UByte]): String =
@@ -19,7 +18,7 @@ object Sha256EtcTests extends TestSuite {
 
   val tests = Tests {
     test("string hashing") {
-      val r = Sha256.sha256(
+      val r = sha256.sha256(
         "a"
       )
 
@@ -29,7 +28,7 @@ object Sha256EtcTests extends TestSuite {
     }
 
     test("big string hashing") {
-      val r = Sha256.sha256(
+      val r = sha256.sha256(
         "A linha não respondia; ia andando. Buraco aberto pela agulha era logo enchido por ela, silenciosa e ativa, como quem sabe o que faz, e não está para ouvir palavras loucas. A agulha, vendo que ela não lhe dava resposta, calou-se também, e foi andando. E era tudo silêncio na saleta de costura; não se ouvia mais que o plic-plic-plic-plic da agulha no pano. Caindo o sol, a costureira dobrou a costura, para o dia seguinte. Continuou ainda nessa e no outro, até que no quarto acabou a obra, e ficou esperando o baile."
       )
 
@@ -39,7 +38,7 @@ object Sha256EtcTests extends TestSuite {
     }
 
     test("bytearray hashing") {
-      val r = Sha256.sha256(
+      val r = sha256.sha256(
         Array[UByte](2.toUByte, 4.toUByte, 201.toUByte, 203.toUByte)
       )
 
@@ -49,7 +48,7 @@ object Sha256EtcTests extends TestSuite {
     }
 
     test("big bytearray hashing") {
-      val r = Sha256.sha256(Array.tabulate[UByte](256)(i => i.toUByte))
+      val r = sha256.sha256(Array.tabulate[UByte](256)(i => i.toUByte))
 
       r.size ==> 32
       bytes2hex(r) ==>
@@ -63,7 +62,7 @@ object Sha256EtcTests extends TestSuite {
       val info = "nodeid".getBytes.map(_.toUByte)
       val salt = Array(0.toUByte)
 
-      val r = Hkdf.hkdf(salt, secret, info, 32)
+      val r = hkdf256.hkdf(salt, secret, info, 32)
       r.size ==> 32
       bytes2hex(
         r
@@ -74,7 +73,7 @@ object Sha256EtcTests extends TestSuite {
       val key = "abcdef".getBytes.map(_.toUByte)
       val msg = "123456".getBytes.map(_.toUByte)
 
-      val r = Hmac.hmac(key, msg)
+      val r = hmac256.hmac(key, msg)
       r.size ==> 32
       bytes2hex(
         r
@@ -83,13 +82,13 @@ object Sha256EtcTests extends TestSuite {
 
     test("sha512") {
       bytes2hex(
-        Sha512.sha512("banana")
+        sha512.sha512("banana")
       ) ==> "f8e3183d38e6c51889582cb260ab825252f395b4ac8fb0e6b13e9a71f7c10a80d5301e4a949f2783cb0c20205f1d850f87045f4420ad2271c8fd5f0cd8944be3"
     }
 
     test("ripemd160") {
       bytes2hex(
-        RipeMd160.ripemd160("banana")
+        ripemd160.ripemd160("banana")
       ) ==> "e8f92e55b15aec83f458cfee39dd4ffeb7f4b8ed"
     }
 
@@ -97,7 +96,7 @@ object Sha256EtcTests extends TestSuite {
       val key = "abcdef".getBytes.map(_.toUByte)
       val msg = "123456".getBytes.map(_.toUByte)
 
-      val r = Hmac512.hmac(key, msg)
+      val r = hmac512.hmac(key, msg)
       r.size ==> 64
       bytes2hex(
         r

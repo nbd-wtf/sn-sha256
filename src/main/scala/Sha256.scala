@@ -1,24 +1,22 @@
-package sha256
-
 import scala.scalanative.libc.stdlib
 import scala.scalanative.libc.string
 import scala.scalanative.unsafe._
 import scala.scalanative.unsigned._
 
-object RipeMd160 {
-  def ripemd160(input: String): Array[UByte] = {
+package object sha256 {
+  def sha256(input: String): Array[UByte] = {
     Zone { implicit z =>
       {
         val str = toCString(input)
         val size: CSize = string.strlen(str)
         val data = alloc[Byte](size).asInstanceOf[Ptr[Byte]]
         string.strncpy(data, str, size)
-        ripemd160(data.asInstanceOf[Ptr[UByte]], size)
+        sha256(data.asInstanceOf[Ptr[UByte]], size)
       }
     }
   }
 
-  def ripemd160(bytearray: Array[UByte]): Array[UByte] = {
+  def sha256(bytearray: Array[UByte]): Array[UByte] = {
     Zone { implicit z =>
       {
         val size = bytearray.size.toLong.toULong
@@ -26,25 +24,24 @@ object RipeMd160 {
         for (i <- 0 until bytearray.size) {
           !(data + i) = bytearray(i)
         }
-        ripemd160(data, size)
+        sha256(data, size)
       }
     }
   }
 
-  def ripemd160(payload: Ptr[UByte], size: CSize): Array[UByte] = {
-    val hash = stdlib.malloc(20L.toULong).asInstanceOf[Ptr[UByte]]
-    RipeMd160Extern.ripemd160(hash, payload, size);
-    val res = Array.ofDim[UByte](20)
-    for (i <- 0 until 20) {
+  def sha256(payload: Ptr[UByte], size: CSize): Array[UByte] = {
+    val hash = stdlib.malloc(32L.toULong).asInstanceOf[Ptr[UByte]]
+    Sha256Extern.sha256(hash, payload, size);
+    val res = Array.ofDim[UByte](32)
+    for (i <- 0 until 32) {
       res(i) = (!(hash + i)).toUByte
     }
     stdlib.free(hash.asInstanceOf[Ptr[Byte]])
     res
   }
-}
 
-@extern
-object RipeMd160Extern {
-  def ripemd160(hash: Ptr[UByte], payload: Ptr[UByte], len: CSize): Unit =
-    extern
+  @extern
+  object Sha256Extern {
+    def sha256(hash: Ptr[UByte], payload: Ptr[UByte], len: CSize): Unit = extern
+  }
 }

@@ -1,11 +1,9 @@
-package sha256
-
 import scala.scalanative.libc.stdlib
 import scala.scalanative.libc.string
 import scala.scalanative.unsafe._
 import scala.scalanative.unsigned._
 
-object Hmac512 {
+package object hmac512 {
   def hmac(
       key: Array[UByte],
       msg: Array[UByte]
@@ -41,15 +39,15 @@ object Hmac512 {
       }
     }
   }
-}
 
-@extern
-object Hmac512Extern {
-  def hmac_sha512(
-      hmac: Ptr[UByte],
-      k: Ptr[UByte],
-      ksize: CSize,
-      d: Ptr[UByte],
-      dsize: CSize
-  ): Unit = extern
+  @extern
+  object Hmac512Extern {
+    def hmac_sha512(
+        hmac: Ptr[UByte],
+        k: Ptr[UByte],
+        ksize: CSize,
+        d: Ptr[UByte],
+        dsize: CSize
+    ): Unit = extern
+  }
 }
