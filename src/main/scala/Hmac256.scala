@@ -3,7 +3,7 @@ import scala.scalanative.libc.string
 import scala.scalanative.unsafe._
 import scala.scalanative.unsigned._
 
-package object hmac512 {
+package object hmac256 {
   def hmac(
       key: Array[UByte],
       msg: Array[UByte]
@@ -20,8 +20,8 @@ package object hmac512 {
       !(msgData + i) = msg(i)
     }
 
-    val result = alloc[UByte](64).asInstanceOf[Ptr[UByte]]
-    Hmac512Extern.hmac_sha512(
+    val result = alloc[UByte](32).asInstanceOf[Ptr[UByte]]
+    HmacExtern.hmac_sha256(
       result,
       keyData,
       keySize,
@@ -29,16 +29,16 @@ package object hmac512 {
       msgSize
     )
 
-    val res = Array.ofDim[UByte](64)
-    for (i <- 0 until 64) {
+    val res = Array.ofDim[UByte](32)
+    for (i <- 0 until 32) {
       res(i) = (!(result + i)).toUByte
     }
     res
   }
 
   @extern
-  object Hmac512Extern {
-    def hmac_sha512(
+  object HmacExtern {
+    def hmac_sha256(
         hmac: Ptr[UByte],
         k: Ptr[UByte],
         ksize: CSize,
