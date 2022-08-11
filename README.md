@@ -27,7 +27,7 @@ No need to import anything, it's reasonable to use directly, like in the example
 import scala.scalanative.unsigned._
 
 // basic sha256
-sha256.sha256("a string") // ==> Array[UByte](192, 220, 134, 239, 218, 0, 96, 212, 8, 64, 152, 169, 14, 201, 43, 61, 74, 168, 157, 127, 126, 15, 186, 84, 36, 86, 29, 33, 69, 30, 23, 88)
+sha256.hash("a string") // ==> Array[UByte](192, 220, 134, 239, 218, 0, 96, 212, 8, 64, 152, 169, 14, 201, 43, 61, 74, 168, 157, 127, 126, 15, 186, 84, 36, 86, 29, 33, 69, 30, 23, 88)
 val r = Sha256.sha256(Array[UByte](12.toUByte, 23.toUByte, 244.toUByte, 180.toUByte))
 bytes2hex(r) // ==> "c8010c6ca931acf480fab946f52d6abf81de50f797a666017cb4f0347c0974f9"
 
